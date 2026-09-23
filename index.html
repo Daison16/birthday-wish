@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Meow 🌸</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <button class="music-btn" onclick="toggleMusic()">🎵 <span id="musicState">Play BGM</span></button>
+  <audio id="bgm" loop>
+    <source src="./audio.mp3/First Sight (Background Score) [WFvA36uzjz8].mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="bg-particles" id="bgParticles"></div>
+
+  <section class="screen active" id="s1">
+    <div class="glass-card">
+      
+      <h1>Hey Vathu!✨</h1>
+
+      <div class="hero-cat-img">
+        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXh4dXIzb3drOXVrNDZkMTMwa2trMXVtdWZqc2FocmN0amxwM2JudiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3z3Jqt42yS104gRc5c/giphy.webp" alt="Cute Cat GIF">
+      </div>
+
+      <p>A special surprise is waiting inside for you...</p>
+
+       <div class="time-container">
+        <p class="time-title">Countdown to Your Birthday 🎂:</p>
+        <div id="timeCounter" class="time-counter">Counting down...</div>
+      </div>
+
+      <button class="action-btn" onclick="nextScreen('roseScreen')">Let's go 💖</button>
+    </div>
+  </section>
+
+  <section class="screen" id="roseScreen">
+    <div class="glass-card">
+      <img src="./images/here’s a rose for all of u ❤️🥹.jpg" class="rose-cat-img" alt="Rose Cat">
+      <h2 class="rosetitle">🌹 For You Meow 🌹</h2>
+      <p class="rose-quote">
+        "Every flower reminds me of your smile,
+        Every moment reminds me of you." 💖
+      </p>
+      <button class="action-btn" onclick="nextScreen('s2')">Thank You 💖</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s2">
+    <div class="glass-card">
+      <div class="icon-badge">🔒</div>
+      <h2 class="cuu">Secret Lock!</h2>
+      <p>Answer this to unlock your surprise letter:</p>
+      
+      <img src="./images/meow😽.jpg" class="cat-img" alt="Rose Cat">
+
+      <label class="quiz-label">What is my favorite nickname for you?</label>
+      <input type="text" id="passcodeKey" class="quiz-input" placeholder="Type answer here..." autocomplete="off">
+      <p id="errorMsg" class="error-msg"></p>
+
+      <button class="action-btn" onclick="checkPasscode()">Unlock Letter 🗝️</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s3">
+    <div class="envelope-stage">
+      <p id="envHint" class="stage-hint">Tap the envelope to open 💌</p>
+
+      <div class="envelope-wrapper" onclick="openEnvelope()">
+        <div class="env-base-back"></div>
+
+        <div id="letterCard" class="letter-card">
+          <h3 class="letter-title">For Vathu 💖</h3>
+          <p class="letter-subtitle">Happy Birthday!</p>
+          <div class="letter-image">
+            <p>I hope your day is filled with happiness, laughter and beautiful memories.</p>
+            <p>May every dream in your heart come true, and may this year bring success, peace and wonderful surprises.</p>
+            <p class="letter-highlight">Thank you for making the world a little brighter.</p>
+            <p class="letter-footer">Wishing you a truly amazing birthday! 🌸</p>
+            <img src="./images/аватарочка с котиком.jpg" class="img" alt="Rose Cat">
+          </div>
+        </div>
+
+        <div class="env-pocket-front"></div>
+        <div class="env-top-flap" id="topFlap"></div>
+      </div>
+
+      <button id="continueBtn" class="action-btn hidden" onclick="nextScreen('s4')">Read Special Quote ✨</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 4: Special Quote Page (Replaced Letter) -->
+  <section class="screen" id="s4">
+    <div class="glass-card quote-page-card">
+      <h2 class="rosetitle">A Special Thought ✨</h2>
+      <div class="custom-quote-box">
+        <span class="quote-icon">''</span>
+        <p class="main-quote-text">
+          They search for poetry in old books and starry skies,
+Not knowing a universe lives quietly in your eyes.
+The way you laugh, the gentle grace in every little thing,
+Is sweeter than the quiet songs the early mornings sing.
+
+No canvas holds the colors that your simple presence brings,
+A rare and tender happiness that heals and softly sings.
+While others chase the fleeting stars across a crowded sea,
+You are the quiet masterpiece
+        </p>
+        <p class="quote-author">- Always for you 🧸🩷</p>
+      </div>
+      <button class="action-btn" onclick="nextScreen('s5')" style="margin-top: 15px;">Why You're Special 🃏</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 5: Card Flip Game -->
+  <section class="screen" id="s5">
+    <div class="glass-card">
+      <h2 class="rosetitle">Reasons Why You're Special ✨</h2>
+      <p>Tap each card to flip and reveal!</p>
+
+      <div class="flip-grid">
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-inner">
+            <div class="flip-front">Your Smile 🌸</div>
+            <div class="flip-back">Can brighten up the darkest day instantly. ❤️</div>
+          </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-inner">
+            <div class="flip-front">Your Eyes 👀</div>
+            <div class="flip-back">Getting lost in them is a journey I would never want to end. 🌙✨❤️</div>
+          </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-inner">
+            <div class="flip-front">Your Kind Heart 💖</div>
+            <div class="flip-back">If hearts had a definition of beauty, it would look exactly like yours. ❤️✨</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="action-btn" onclick="nextScreen('s6')">Make a Wish 🎂</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s6">
+    <div class="glass-card cake-card">
+      <h2 class="cuu">Make a Wish & Tap the Candle 🕯️</h2>
+      
+      <div class="cake-wrapper">
+        <div class="candle" onclick="blowCandle()">
+          <div class="flame" id="flame"></div>
+        </div>
+        <div class="cake-tier tier-top"></div>
+        <div class="cake-tier tier-mid"></div>
+        <div class="cake-tier tier-base"></div>
+      </div>
+
+      <p id="wishMsg" class="wish-msg"></p>
+      <button id="drawBtn" class="action-btn secondary hidden" onclick="nextScreen('s7')">Send Love Back 🎨</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s7">
+    <div class="glass-card">
+      <h2>Draw Something or Send Love 🎨</h2>
+      <p>Draw a heart below using your finger/mouse!</p>
+      
+      <canvas id="paintCanvas" width="280" height="180"></canvas>
+
+      <div class="canvas-controls">
+        <button class="action-btn secondary" onclick="clearCanvas()">Clear 🔄</button>
+        <button class="action-btn" onclick="sendLove()">Send Love 💖</button>
+      </div>
+      <p id="sendMsg" class="wish-msg"></p>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

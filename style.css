@@ -1,0 +1,290 @@
+/* GPU Acceleration & Base Resets */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+body {
+  background: linear-gradient(135deg, #f18e91, #9ce8f4 100%);
+  background-attachment: fixed; /* Ithuthaan mobile-la background shake aaguvathai thadukkum */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Music Control Button */
+.music-btn {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ad1457;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Background Particles */
+.bg-particles {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 18px;
+  animation: floatParticle 6s linear infinite;
+}
+
+@keyframes floatParticle {
+  0% { transform: translateY(100vh) scale(0.6); opacity: 0; }
+  50% { opacity: 0.9; }
+  100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
+}
+
+/* Screen Transitions */
+.screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw; height: 100vh;
+  z-index: 1; padding: 20px;
+}
+
+.screen.active {
+  display: flex;
+  animation: smoothFadeIn 0.3s ease-in-out;
+}
+
+@keyframes smoothFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Glassmorphism Card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 12px 35px 0 rgba(255, 105, 180, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  padding: 25px 20px;
+  text-align: center;
+  max-width: 380px; width: 90%;
+  transform: translateZ(0);
+}
+
+.icon-badge { font-size: 45px; margin-bottom: 5px; }
+h1 { font-family: 'Dancing Script', cursive; font-size: 38px; color: #d81b60; margin-bottom: 5px; }
+h2 { font-size: 20px; color: #ad1457; margin-bottom: 12px; }
+p { color: #4a4a4a; font-size: 13px; line-height: 1.4; margin-bottom: 15px; }
+
+/* Time Counter Box */
+.time-container {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 14px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+.time-title { font-size: 12px; font-weight: 600; color: #880e4f; margin-bottom: 4px; }
+.time-counter { font-size: 13px; font-weight: 700; color: #d81b60; }
+
+/* Quiz Styles */
+.quiz-label { font-size: 13px; font-weight: 600; color: #880e4f; display: block; margin-bottom: 12px; }
+.quiz-input {
+  width: 100%; padding: 10px 14px; border-radius: 20px;
+  border: 2px solid #ff80ab; outline: none; font-size: 14px; text-align: center;
+  margin-bottom: 8px; background: rgba(255, 255, 255, 0.9);
+}
+.error-msg { color: #d50000; font-size: 12px; font-weight: 600; min-height: 18px; margin-bottom: 10px; }
+
+/* Action Buttons */
+.action-btn {
+  background: linear-gradient(45deg, #ff4081, #ff80ab);
+  color: #fff; border: none; padding: 10px 24px;
+  font-size: 14px; font-weight: 600; border-radius: 30px; cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4); transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin: 4px;
+}
+.action-btn.secondary {
+  background: linear-gradient(45deg, #ab47bc, #ce93d8);
+  box-shadow: 0 4px 15px rgba(171, 71, 188, 0.4);
+}
+.action-btn:hover { transform: translateY(-2px); }
+.hidden { display: none !important; }
+
+/* Envelope Engine */
+.envelope-stage { 
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  position: relative; width: 100%; padding-top: 150px;
+}
+.stage-hint { 
+  font-weight: 600; color: rgb(138, 26, 82); margin-bottom: 20px; font-size: 22px; 
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.envelope-wrapper { 
+  position: relative; width: 350px; height: 240px; cursor: pointer; overflow: hidden; border-radius: 0 0 20px 20px;
+}
+.env-base-back { 
+  position: absolute; bottom: 0; left: 0; width: 100%; height: 220px; background: #f06292; border-radius: 0 0 20px 20px; z-index: 1; 
+}
+.letter-card {
+  position: absolute; top: 40px; left: 15px; width: 320px; height: 190px;
+  background: url('./images/b9b839ea6c2a6c65e8867ee271eb5bae.jpg');
+  background-size: cover; background-position: center;
+  border-radius: 16px; padding: 22px 18px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+  z-index: 2; text-align: center; overflow: hidden; 
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), height 0.4s ease 0.3s;
+}
+.letter-title { font-family: 'Dancing Script', cursive; font-size: 28px; color: #d81b60; margin-bottom: 2px; }
+.letter-subtitle { font-weight: 700; color: #880e4f; font-size: 14px; margin-bottom: 12px; }
+.letter-body p { font-size: 13px; margin-bottom: 8px; color: #471f1f; line-height: 1.5; }
+.letter-highlight { color: #e91e63 !important; font-weight: 600; }
+.letter-footer { font-weight: 700; color: #d81b60 !important; margin-top: 6px; }
+.env-pocket-front {
+  position: absolute; bottom: 0; left: 0; width: 0; height: 0;
+  border-left: 175px solid #ff80ab; border-right: 175px solid #ff80ab;
+  border-bottom: 125px solid #ff4081; border-top: 95px solid transparent;
+  border-radius: 0 0 20px 20px; z-index: 2; pointer-events: none;
+}
+.env-top-flap {
+  position: absolute; top: 20px; left: 0; width: 0; height: 0;
+  border-left: 175px solid transparent; border-right: 175px solid transparent;
+  border-top: 115px solid #f06292; transform-origin: top center;
+  transition: transform 0.5s ease-in-out, opacity 0.2s ease 0.3s;
+  z-index: 4; pointer-events: none;
+}
+.envelope-wrapper.open { overflow: visible; }
+.envelope-wrapper.open .env-top-flap { transform: rotateX(180deg); opacity: 0; }
+.envelope-wrapper.open .letter-card { transform: translateY(-300px); height: auto; min-height: 280px; overflow: visible; z-index: 5; }
+
+/* Custom Quote Box Styling (Replaced Letter) */
+.custom-quote-box {
+background: url('./images/download\ \(10\).jpg');
+background-size:cover; background-position: center;background-repeat: no-repeat;
+  border: 2px dashed #ff80ab;
+  border-radius: 16px;
+  padding: 22px 18px;
+  text-align: center;
+  margin: 15px 0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  position: relative;
+  height: 400px;
+}
+
+.quote-icon {
+  font-size: 25px;
+  color: #0e0000;
+  font-family: serif;
+  line-height: 0.5;
+  display: block;
+  margin-bottom: 20px;
+  opacity: 0.6;
+}
+
+.main-quote-text {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 16px;
+  color: #050002;
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.quote-author {
+  font-family: 'Dancing Script', cursive;
+  font-size: 20px;
+  color: #d81b60;
+  margin-bottom: 0 !important;
+}
+
+
+/* Card Flip Engine */
+.flip-grid {
+  display: flex; flex-direction: column; gap: 14px; margin: 15px 0 20px 0; width: 100%; min-height: 200px;
+}
+.flip-card {
+  width: 100%; height: 55px; perspective: 1000px; cursor: pointer; display: block;
+}
+.flip-inner {
+  position: relative; width: 100%; height: 100%; text-align: center;
+  transition: transform 0.6s ease; transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+.flip-front, .flip-back {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  border-radius: 14px; display: flex; align-items: center; justify-content: center;
+  padding: 8px 12px; font-size: 13px; font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+.flip-front {
+  background: linear-gradient(45deg, #86cfe6, #ee6894); color: #ffffff; z-index: 2;
+}
+.flip-back {
+  background: #f2d9d9; color: #691616; border: 2px solid #ff80ab;
+  transform: rotateY(180deg);
+}
+
+/* Cake Section */
+.cake-wrapper { display: flex; flex-direction: column; align-items: center; margin: 20px 0; }
+.cake-tier { border-radius: 8px; }
+.tier-top { width: 110px; height: 30px; background: #ff80ab; }
+.tier-mid { width: 140px; height: 35px; background: #ff4081; }
+.tier-base { width: 170px; height: 40px; background: #f50057; }
+.candle {
+  width: 10px; height: 32px;
+  background: repeating-linear-gradient(45deg, #fff, #fff 5px, #29b6f6 5px, #29b6f6 10px);
+  border-radius: 3px; position: relative; cursor: pointer;
+}
+.flame {
+  width: 12px; height: 20px; background: linear-gradient(#ffeb3b, #ff9800);
+  border-radius: 50% 50% 20% 20%; position: absolute; top: -18px; left: -1px;
+  box-shadow: 0 0 10px #ff9800; animation: flameBurn 0.4s infinite alternate;
+}
+@keyframes flameBurn { 0% { transform: scale(1); } 100% { transform: scale(1.15) rotate(2deg); } }
+.flame.off { display: none; }
+.wish-msg { font-family: 'Dancing Script', cursive; font-size: 22px; color: #ad1457; font-weight: 700; }
+
+/* Canvas Styling */
+#paintCanvas {
+  background: white; border-radius: 12px;
+  border: 2px dashed #ff80ab; cursor: crosshair; touch-action: none;
+  margin-bottom: 12px;
+}
+
+/* Additional Asset Styling */
+.hero-cat-img { width: 100%; max-width: 140px; margin: 10px auto 15px auto; display: block; }
+.hero-cat-img img { width: 100%; height: auto; border-radius: 16px; box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3); }
+.rose-cat-img { width: 100%; max-width: 280px; border-radius: 20px; margin-bottom: 15px; box-shadow: 0 10px 25px rgba(245, 17, 17, 0.15); }
+.rose-quote { font-family: 'Times New Roman', Times, serif; font-size: 18px; color: #0a0004; font-style: italic; margin: 15px 0 20px; }
+.rosetitle { font-family: 'Dancing Script', cursive; font-size: 30px; color: #9b0707; margin-bottom: 5px; }
+.cuu { font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; }
+.cat-img { width: 80%; max-width: 280px; border-radius: 20px; margin-bottom: 10px; box-shadow: 0 10px 25px rgba(245, 17, 17, 0.15); }
+.img { width: 60%; max-height: 100%; border-radius: 20px; margin-bottom: 2px; box-shadow: 0 10px 25px rgba(245, 17, 17, 0.15); }
